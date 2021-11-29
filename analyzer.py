@@ -12,19 +12,19 @@ class Analyzer:
         print("Countries")
 
     def continents():
-        print("Countries")
+        print("Continents")
 
     def largeBrowser():
-        print("Countries")
+        print("Large Browser")
 
     def shortBrowser():
-        print("Countries")
+        print("Short Browser")
 
     def alsoLikes():
-        print("Countries")
+        print("Also Likes")
 
     def alsoLikesGraph():
-        print("Countries")
+        print("Also Likes Graph")
 
     def __init__(self):
         print("Analyzer")
