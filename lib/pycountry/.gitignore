@@ -1,0 +1,32 @@
+# Project files
+*.komodoproject
+.idea/
+.metadata/
+.project
+.settings/
+.pydevproject
+.python-version
+.idea
+.dartignore
+
+.sw*
+*.vim
+*.zip
+
+# Code build files
+*.egg-info/
+build/
+__pycache__/
+pycountry_convert/__pycache__/
+*.pyc
+
+
+# pytest
+.cache/*
+/htmlcov/
+/.coverage
+
+# distribution
+.eggs/*
+dist/*
+

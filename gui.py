@@ -10,16 +10,36 @@ Filename: gui.py
 from tkinter import *
 from tkinter import ttk
 
+import manager as mn
+
 
 # Declare class GUI
 class GUI:
 
     # Action methods that are called upon clicking a button
+
+    """
+
+    Method which calls the doJob method for the counting countries functionality.
+    
+    :param: Self references the current instance of the GUI class.  
+    :return: Void
+    
+    """
     def countries(self):
-        print("Countries")
+        self.doJob('2A')
+
+    """
+
+    Method which calls the doJob method for the counting continents functionality.
+    
+    :param: Self references the current instance of the GUI class.  
+    :return: Void
+    
+    """
         
     def continents(self):
-        print("Continents")
+        self.doJob('2B')
 
     def largeBrowser(self):
         print("Full Browser")
@@ -33,13 +53,46 @@ class GUI:
     def alsoLikesGraph(self):
         print("Also Likes Graph")
 
-    # Class constructor method
+    """
+
+    Helper method which executes a job by calling the manager constructor passing in
+    a specified job, the user and document uuid's and the filename. If the job is valid in the
+    manager class it will then execute the corresponding job.
+    
+    :param: Self references the current instance of the GUI class.
+    :param: Job references a task ID as initialised in the manager class,
+    (eg. 2A corresponds to requirement 2A).
+    :return: Void
+    
+    """
+
+    def doJob(self, job):
+        user = self.userID.get()
+        filename = self.filename.get()
+        document = self.documentID.get()
+
+        if document == "" or filename == "":
+            print("Please enter at least both a document uuid and filename")
+        else:
+            self.root.destroy()
+            mn.Manager(filename, job, document, user)
+
+    """
+
+    Class constructor function which initalises the GUI.
+    Window dimensions, text input, buttons and labels are all initialised and configured here.
+
+    :param: Self references the current instance of the GUI class.
+    :return: Void
+    
+    """
+    
     def __init__(self):
         self.root = Tk()
         self.root.title("F21SC CW2")
 
         # Set window dimensions and layout
-        mainframe = ttk.Frame(self.root, padding="14 14 14 14")
+        mainframe = ttk.Frame(self.root, padding="20 20 20 20")
         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
         mainframe.columnconfigure(0, weight=1)
         mainframe.rowconfigure(0, weight=1)
@@ -67,8 +120,8 @@ class GUI:
 
         # Labels for text input fields
         ttk.Label(mainframe, text="User UUID:").grid(column=1, row=1, sticky=E)
-        ttk.Label(mainframe, text="Document UUID").grid(column=1, row=2, sticky=E)
-        ttk.Label(mainframe, text="Filename").grid(column=1, row=3, sticky=E)
+        ttk.Label(mainframe, text="Document UUID:").grid(column=1, row=2, sticky=E)
+        ttk.Label(mainframe, text="Filename:").grid(column=1, row=3, sticky=E)
 
         for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
 
