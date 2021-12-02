@@ -17,6 +17,7 @@ import pycountry_convert as pycc
 # Declare analyzer class
 class Analyzer:
 
+    # Declare global data dictionaries
     numCountries = {}
     numContinents = {}
 
@@ -36,7 +37,7 @@ class Analyzer:
     def countries(self, documentID, file):
         for record in file.processFile():
             if 'visitor_country' in record and 'event_type' in record and 'subject_doc_id' in record:
-                if record['event_type'] == 'read':
+                if record['event_type'] == 'read' or record['event_type'] == 'pageread' or record['event_type'] == 'pagereadtime':
                     if str(record['subject_doc_id']) == documentID:
                         if record['visitor_country'] in self.numCountries:
                             self.numCountries[record['visitor_country']] += 1
@@ -60,18 +61,16 @@ class Analyzer:
         else:
             for countryCode in self.numCountries:
                 try:
-                    continentEntry = pycc.country_alpha2_to_continent_code(countryCode)
+                    continentEntry = pycc.convert_country_alpha2_to_continent(countryCode)
                 except KeyError:
-                    print('%s could not be allocated a continent.' % countryCode)
-                    continue
-                except:
-                    print('%s could not be converted to a continent' % countryCode)
+                    print('KeyError: %s could not be found as a valid country code.' % countryCode)
                     continue
 
+
                 if continentEntry in self.numContinents:
-                    self.continentCounts[continentEntry] += 1
+                    self.numContinents[continentEntry] += 1
                 else:
-                    self.continentCounts[continentEntry] = 1
+                    self.numContinents[continentEntry] = 1
         
 
     def largeBrowser():

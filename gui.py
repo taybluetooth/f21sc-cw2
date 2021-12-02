@@ -92,10 +92,24 @@ class GUI:
         self.root.title("F21SC CW2")
 
         # Set window dimensions and layout
-        mainframe = ttk.Frame(self.root, padding="20 20 20 20")
+        mainframe = ttk.Frame(self.root, padding="12 12 12 12")
         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
         mainframe.columnconfigure(0, weight=1)
         mainframe.rowconfigure(0, weight=1)
+
+        # Action buttons
+        # Text represents functionality as referenced in specification
+        ttk.Button(mainframe, text="2A", command=self.countries).grid(column=1, row=4, sticky=W)
+        ttk.Button(mainframe, text="2B", command=self.continents).grid(column=1, row=5, sticky=W)
+        ttk.Button(mainframe, text="3A", command=self.largeBrowser).grid(column=2, row=4, sticky=W)
+        ttk.Button(mainframe, text="3B", command=self.shortBrowser).grid(column=2, row=5, sticky=W)
+        ttk.Button(mainframe, text="4D", command=self.alsoLikes).grid(column=3, row=4, sticky=W)
+        ttk.Button(mainframe, text="5", command=self.alsoLikesGraph).grid(column=3, row=5, sticky=W)
+
+        # Labels for text input fields
+        ttk.Label(mainframe, text="User UUID:").grid(column=1, row=1, sticky=E)
+        ttk.Label(mainframe, text="Document UUID:").grid(column=1, row=2, sticky=E)
+        ttk.Label(mainframe, text="Filename:").grid(column=1, row=3, sticky=E)
 
         # Text input fields
         self.userID = StringVar()
@@ -109,21 +123,8 @@ class GUI:
         filename_entry = ttk.Entry(mainframe, width=7, textvariable=self.filename)
         filename_entry.grid(column=2, row=3, columnspan=2, sticky=(W, E))
 
-        # Action buttons
-        # Text represents functionality as referenced in specification
-        ttk.Button(mainframe, text="2A", command=self.countries).grid(column=1, row=4, sticky=W)
-        ttk.Button(mainframe, text="2B", command=self.continents).grid(column=2, row=4, sticky=W)
-        ttk.Button(mainframe, text="3A", command=self.largeBrowser).grid(column=3, row=4, sticky=W)
-        ttk.Button(mainframe, text="3B", command=self.shortBrowser).grid(column=1, row=5, sticky=W)
-        ttk.Button(mainframe, text="4D", command=self.alsoLikes).grid(column=2, row=5, sticky=W)
-        ttk.Button(mainframe, text="5", command=self.alsoLikesGraph).grid(column=3, row=5, sticky=W)
 
-        # Labels for text input fields
-        ttk.Label(mainframe, text="User UUID:").grid(column=1, row=1, sticky=E)
-        ttk.Label(mainframe, text="Document UUID:").grid(column=1, row=2, sticky=E)
-        ttk.Label(mainframe, text="Filename:").grid(column=1, row=3, sticky=E)
-
-        for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
+        for child in mainframe.winfo_children(): child.grid_configure(padx=10, pady=10)
 
         docID_entry.focus()
 
