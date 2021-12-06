@@ -26,115 +26,107 @@ class GUI:
 
     # Action methods that are called upon clicking a button
 
-    """
-
-    Method which calls the doJob method for the counting countries functionality.
-    
-    :param: Self references the current instance of the GUI class.  
-    :return: Void
-    
-    """
     def countries(self):
+        
+        """
+        Method which calls the doJob method for the counting countries functionality.
+        
+        :param: Self references the current instance of the GUI class.  
+        :return: Void
+        """
+        
         self.doJob('2A')
-
-    """
-
-    Method which calls the doJob method for the counting continents functionality.
-    
-    :param: Self references the current instance of the GUI class.  
-    :return: Void
-    
-    """
         
     def continents(self):
+        
+        """
+        Method which calls the doJob method for the counting continents functionality.
+        
+        :param: Self references the current instance of the GUI class.  
+        :return: Void
+        """
+        
         self.doJob('2B')
 
-    """
-
-    Method which calls the doJob method for the detailed browser (OS & Version included) visits functionality.
-    
-    :param: Self references the current instance of the GUI class.  
-    :return: Void
-    
-    """
-
     def detailedBrowser(self):
+        
+        """
+        Method which calls the doJob method for the detailed browser (OS & Version included) visits functionality.
+        
+        :param: Self references the current instance of the GUI class.  
+        :return: Void
+        """
+        
         self.doJob('3A')
 
-    """
-
-    Method which calls the doJob method for the concise browser (Main Browser Name only) visits functionality.
-    
-    :param: Self references the current instance of the GUI class.  
-    :return: Void
-    
-    """
-
     def conciseBrowser(self):
+        
+        """
+        Method which calls the doJob method for the concise browser (Main Browser Name only) visits functionality.
+        
+        :param: Self references the current instance of the GUI class.  
+        :return: Void   
+        """
+        
         self.doJob('3B')
 
-    """
-
-    Method which calls the doJob method for the top 10 most avid readers functionality.
-    
-    :param: Self references the current instance of the GUI class.  
-    :return: Void
-    
-    """
-
     def readerProfile(self):
+        
+        """
+        Method which calls the doJob method for the top 10 most avid readers functionality.
+        
+        :param: Self references the current instance of the GUI class.  
+        :return: Void
+        """
+        
         self.doJob('4')
 
-    """
-
-    Method which calls the doJob method for the also likes functionality.
-    
-    :param: Self references the current instance of the GUI class.  
-    :return: Void
-    
-    """
-
     def alsoLikes(self):
-        self.doJob('5D')
         
-    """
-
-    Method which calls the doJob method for the also likes graph generation functionality.
-    
-    :param: Self references the current instance of the GUI class.  
-    :return: Void
-    
-    """
+        """
+        Method which calls the doJob method for the also likes functionality.
+        
+        :param: Self references the current instance of the GUI class.  
+        :return: Void
+        """
+        
+        self.doJob('5D')
 
     def alsoLikesGraph(self):
+        
+        """
+        Method which calls the doJob method for the also likes graph generation functionality.
+        
+        :param: Self references the current instance of the GUI class.  
+        :return: Void
+        """
+        
         self.doJob('6')
 
-    """
-
-    Method which calls the doJob method for the gui test functionality.
-    
-    :param: Self references the current instance of the GUI class.  
-    :return: Void
-    
-    """
-
     def guiTest(self):
+        
+        """
+        Method which calls the doJob method for the gui test functionality.
+        
+        :param: Self references the current instance of the GUI class.  
+        :return: Void    
+        """
+        
         self.doJob('7')
 
-    """
-
-    Helper method which executes a job by calling the manager constructor passing in
-    a specified job, the user and document uuid's and the filename. If the job is valid in the
-    manager class it will then execute the corresponding job.
-    
-    :param: Self references the current instance of the GUI class.
-    :param: Job references a task ID as initialised in the manager class,
-    (eg. 2A corresponds to requirement 2A).
-    :return: Void
-    
-    """
-
     def doJob(self, job):
+        
+        """
+        Helper method which executes a job by calling the manager constructor passing in
+        a specified job, the user and document uuid's and the filename. If the job is valid in the
+        manager class it will then execute the corresponding job.
+        
+        :param: Self references the current instance of the GUI class.
+        :param: Job references a task ID as initialised in the manager class,
+        (eg. 2A corresponds to requirement 2A).
+        :return: Void
+        """
+        
         # Strip whitespace from both user and document uuid's        
         user = self.userID.get().strip()
         filename = self.filename.get()
@@ -152,18 +144,17 @@ class GUI:
             else:
                 self.root.destroy()
                 mn.Manager(filename, job, document, user)
-
-    """
-
-    Class constructor function which initalises the GUI.
-    Window dimensions, text input, buttons and labels are all initialised and configured here.
-
-    :param: Self references the current instance of the GUI class.
-    :return: Void
-    
-    """
     
     def __init__(self):
+        
+        """
+        Class constructor function which initalises the GUI.
+        Window dimensions, text input, buttons and labels are all initialised and configured here.
+
+        :param: Self references the current instance of the GUI class.
+        :return: Void
+        """
+        
         self.root = Tk()
         self.root.title("F20SC CW2")
 

@@ -27,19 +27,20 @@ print_red = lambda x: cprint(x, 'white', 'on_red')
 # Declare graph class
 class Graph:
 
+    # Declare name to save directed graph as
     file = "DirectedGraph"
 
-    """
-    Draws a histogram graph given data that can be represented a constant
-    and plotted accordingly.
-
-    :param: Data references the data to be plotted in the graph
-    :param: Label references the label to be shown adjacent to the bar(s) in the graph.
-    :param: Title references the title assigned to matplotlib.
-    :return: Void
-    
-    """
     def drawHistogram(self, data, label="Data", title="Default"):
+        
+        """
+        Draws a histogram graph given data that can be represented a constant
+        and plotted accordingly.
+
+        :param: Data references the data to be plotted in the graph
+        :param: Label references the label to be shown adjacent to the bar(s) in the graph.
+        :param: Title references the title assigned to matplotlib.
+        :return: Void
+        """
 
         # Generate random bar colour to help distinguish data
         r = lambda: random.randint(0,255)       
@@ -65,6 +66,16 @@ class Graph:
         mpl.show()
 
     def shortenNumber(self, number):
+        
+        """
+        Method which shortens a number over 1000 to be a format consisting of letter notation.
+        For example shorten 1000 to 1K.
+        
+        :param: Self references the current instance of the graph class.
+        :param: number references the number to be shortened.
+        :return: shortened number.
+        """
+        
         number = number / 2
         number = float('{:.3g}'.format(number))
         size = 0
@@ -74,8 +85,22 @@ class Graph:
         return '{}{}'.format('{:f}'.format(number).rstrip('0').rstrip('.'), ['', 'K', 'M'][size])
 
     """
+    Method which generates a directed graph using the graphviz module.
+    
+    Nodes are created for documents and visitors, with the user inputted document and/or user appearing in green.
+    UUID's are shortened to be the last 4 digits to improve readability.
+     
+    Graphviz Documentation used for assistance:
     https://graphviz.readthedocs.io/en/stable/manual.html
+    
+    :param: Self references the current instance of the graph class.
+    :param: data references the data dictionary to be plotted in the graph.
+    :param: documentID references the document uuid to be analysed.
+    :param: lines references the file's total line count.
+    :param: visitorID references the user's uuid.
+    :return: Void
     """
+    
     def directedGraph(self, data, documentID, lines, visitorID=None):
         
         if type(data) != dict:

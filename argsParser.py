@@ -11,29 +11,29 @@ import argparse as ag
 # Declare ArgsParser class
 class ArgsParser:
 
-    """
-    Method which returns the parsed arguments declared
-    in the constructor function.
-    
-    :param: Self references the current instance of the ArgsParser class.
-    :return: Parsed arguments
-
-    """
-    def parse(self):   
+    def parse(self): 
+        
+        """
+        Method which returns the parsed arguments declared
+        in the constructor function.
+        
+        :param: Self references the current instance of the ArgsParser class.
+        :return: Parsed arguments
+        """ 
+        
         parsed = self.root.parse_args()
         return parsed
 
-    """
-    Constuctor function which initialises the class and assigns attributes to it.
-    Argument parser is declared as the root attribute and arguments are then added to root.
-
-    :param: Self references the current instance of the ArgsParser class.
-    :return: Void
-    
-    """
-    
     def __init__(self):
         
+        """
+        Constuctor function which initialises the class and assigns attributes to it.
+        Argument parser is declared as the root attribute and arguments are then added to root.
+
+        :param: Self references the current instance of the ArgsParser class.
+        :return: Void
+        """
+       
         # Declare arguments parser
         self.root = ag.ArgumentParser()
 

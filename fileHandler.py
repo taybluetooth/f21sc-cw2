@@ -19,33 +19,33 @@ print_red = lambda x: cprint(x, 'white', 'on_red')
 
 # Declare class FileHandler
 class FileHandler:
-
-    """
-    Class constructor method which initialises an instance of the fileHandler
-    class. The file to be read is initialised by a parameter and a lines constant
-    is declared.
-
-    :param: Self references the current instance of the fileHandler class.
-    :param: File references the file to be processed and read.
-    :return: Void
-    """
+    
     def __init__(self, file):
+        
+        """
+        Class constructor method which initialises an instance of the fileHandler
+        class. The file to be read is initialised by a parameter and a lines constant
+        is declared.
+
+        :param: Self references the current instance of the fileHandler class.
+        :param: File references the file to be processed and read.
+        :return: Void
+        """
+        
         self.file = file
         self.lines = 0
-
-    # Process file method
-    # Opens file and reads file line by line, yielding its json entry
-    # Function only finishes when reaching an empty line
-    """
-    Method which processes the file declared in the constructor. File is opened
-    and read line by line, yielding an entry which is processed by the json package.
-    If file is not found it is handled by the FileNotFoundError exception handler.
-
-    :param: Self references the current instance of the fileHandler class.
-    :return: Void
-    """
+        
     def processFile(self):
+                
+        """
+        Method which processes the file declared in the constructor. File is opened
+        and read line by line, yielding an entry which is processed by the json package.
+        If file is not found it is handled by the FileNotFoundError exception handler.
 
+        :param: Self references the current instance of the fileHandler class.
+        :return: Void
+        """
+        
         # Try open the file
         try:
             with io.open(self.file, 'r', -1, 'utf-8') as f:

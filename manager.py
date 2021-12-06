@@ -22,66 +22,73 @@ print_red = lambda x: cprint(x, 'white', 'on_red')
 # Declare class
 class Manager:
 
-    """
-    Controller method which calls the countries method in the analysis class.
-    After successfully executing this it then executes the drawHistogram function in the graph class using the results.
-
-    :param: Self references the current instance of the manager class.
-    :return: Void
-    """
     def countries(self):
+        
+        """
+        Controller method which calls the countries method in the analysis class.
+        After successfully executing this it then executes the drawHistogram function in the graph class using the results.
+
+        :param: Self references the current instance of the manager class.
+        :return: Void
+        """
+        
         self.analyzer.countries(self.doc, self.fileHandler)
         self.graph.drawHistogram(self.analyzer.numCountries, title="Number of Countries", label="Visits by Country")
         
-    """
-    Controller method which calls the continents method in the analysis class after calculating the
-    amount of countries that visitors have read the document from by using the already declared countries method.
-    After successfully executing this it then executes the drawHistogram function in the graph class using the results.
-
-    :param: Self references the current instance of the manager class.
-    :return: Void
-    """
-    
     def continents(self):
+        
+        """
+        Controller method which calls the continents method in the analysis class after calculating the
+        amount of countries that visitors have read the document from by using the already declared countries method.
+        After successfully executing this it then executes the drawHistogram function in the graph class using the results.
+
+        :param: Self references the current instance of the manager class.
+        :return: Void
+        """
+        
         self.analyzer.countries(self.doc, self.fileHandler)
         self.analyzer.continents()
         self.graph.drawHistogram(self.analyzer.numContinents, title="Number of Continents", label="Visits by Continent")
         
-    """
-    Controller method which calls the detailedBrowser method in the analysis class.
-    After successfully executing this it then executes the drawHistogram function in the graph class using the results.
-
-    :param: Self references the current instance of the manager class.
-    :return: Void
-    """
     def detailedBrowser(self):
+        
+        """
+        Controller method which calls the detailedBrowser method in the analysis class.
+        After successfully executing this it then executes the drawHistogram function in the graph class using the results.
+
+        :param: Self references the current instance of the manager class.
+        :return: Void
+        """
+        
         self.analyzer.detailedBrowser(self.doc, self.fileHandler)
         self.graph.drawHistogram(self.analyzer.detailedBrowserViews, title="Visits by Browser (Detailed)", label="Number of Unique Users")
 
-    """
-    Controller method which calls the conciseBrowser method in the analysis class after calculating the
-    amount of browsers that visitors have used to read the document from by using the already declared detailedBrowsers method.
-    After successfully executing this it then executes the drawHistogram function in the graph class using the results.
-
-    :param: Self references the current instance of the manager class.
-    :return: Void
-    """
-
     def conciseBrowser(self):
+        
+        """
+        Controller method which calls the conciseBrowser method in the analysis class after calculating the
+        amount of browsers that visitors have used to read the document from by using the already declared detailedBrowsers method.
+        After successfully executing this it then executes the drawHistogram function in the graph class using the results.
+
+        :param: Self references the current instance of the manager class.
+        :return: Void
+        """
+        
         self.analyzer.detailedBrowser(self.doc, self.fileHandler)
         self.analyzer.conciseBrowser()
         self.graph.drawHistogram(self.analyzer.conciseBrowserViews, title="Visits by Browser (Concise)", label="Number of Unique Users")
 
-    """
-    Controller method which calls the readerProfile method in the analysis class. It then calls the sortDict method in the analysis class
-    using the readers object to sort the dictionary, assigning it to the maxValues variable. This variable is then used to plot a histogram
-    using the drawHistogram method found in the graph class.
-
-    :param: Self references the current instance of the manager class.
-    :return: Void
-    """
-
     def readerProfile(self):
+        
+        """
+        Controller method which calls the readerProfile method in the analysis class. It then calls the sortDict method in the analysis class
+        using the readers object to sort the dictionary, assigning it to the maxValues variable. This variable is then used to plot a histogram
+        using the drawHistogram method found in the graph class.
+
+        :param: Self references the current instance of the manager class.
+        :return: Void
+        """
+        
         self.analyzer.readerProfile(self.fileHandler)
         maxValues = self.analyzer.sortDict(self.analyzer.readers)
         maxValues = dict(maxValues[:10])
@@ -94,6 +101,15 @@ class Manager:
             self.graph.drawHistogram(maxValues, title="Top 10 Most Avid Readers", label="Total Time Spent Reading (secs)")
         
     def alsoLikes(self):
+        
+        """
+        Controller method which calls the alsoLikes method in the analysis class.
+        It then prints a formatted table containing the method's output.
+
+        :param: Self references the current instance of the manager class.
+        :return: Void
+        """
+        
         documents = self.analyzer.alsoLikes(self.doc, self.fileHandler, self.user)
         
         if documents:
@@ -105,17 +121,36 @@ class Manager:
             print("\n")
             
     def alsoLikesGraph(self):
+        
+        """
+        Controller method which calls the alsoLikesGraph method in the analysis class.
+        It then calls the directedGraph method in the graph class using the results from the previous 
+        method if it exists.
+
+        :param: Self references the current instance of the manager class.
+        :return: Void
+        """
+        
         graph = self.analyzer.alsoLikesGraph(self.doc, self.fileHandler, self.user)
         if graph:
             self.graph.directedGraph(graph, self.doc, self.fileHandler.lines, self.user)
 
     def guiTest(self):
+        
+        """
+        Controller method which creates a GUI instance to test task 7.
+
+        :param: Self references the current instance of the manager class.
+        :return: Void
+        """
+        
         gui.GUI()
         
 
     # Declare jobs object.
     # Job ID corresponds to methods above.
     # When job is called the associated method will execute.
+    
     jobs = {
         '2A': countries,
         '2B': continents,
@@ -128,30 +163,39 @@ class Manager:
     }
 
     def assignJob(self):
+        
+        """
+        Helper method which assigns a job and executes it if it exists in the jobs object.
+        
+        :param: Self references the current instance of the manager class.
+        :return: Void
+        """
+        
         if self.doc is not None:
             print("\nExecuting task %s.\n" % str(self.job))
             self.jobs[self.job](self)
         else:
             print_red("Please specify a valid document to use.")
-
-    """
-    Class constructor method which initialises an instance of the manager class.
-    File, job, document and user uuid's are initialised and used to
-    declare the analyser, graph and fileHandler classes also.
-
-    Method checks the job parameter's value against the jobs object declared above.
-    If the job exists in the object then the job is executed.
-    Otherwise an error is given.
-
-    :param: Self references the current instance of the manager class.
-    :param: File references the user inputted file that exists in the current working directory.
-    :param: Job references a task ID that is called in the GUI class using the doJob method.
-    :param: Doc_uuid references the user specified document uuid.
-    :param: User_uuid references the user specified user uuid,
-    which is default set to None as its not mandatory for analysis.
-    :return: Void
-    """
+            
     def __init__(self, file, job, doc_uuid=None, user_uuid = None):
+        
+        """
+        Class constructor method which initialises an instance of the manager class.
+        File, job, document and user uuid's are initialised and used to
+        declare the analyser, graph and fileHandler classes also.
+
+        Method checks the job parameter's value against the jobs object declared above.
+        If the job exists in the object then the job is executed.
+        Otherwise an error is given.
+
+        :param: Self references the current instance of the manager class.
+        :param: File references the user inputted file that exists in the current working directory.
+        :param: Job references a task ID that is called in the GUI class using the doJob method.
+        :param: Doc_uuid references the user specified document uuid.
+        :param: User_uuid references the user specified user uuid,
+        which is default set to None as its not mandatory for analysis.
+        :return: Void
+        """
         
         self.file = file
         # Uppercase job input to prevent user input error
