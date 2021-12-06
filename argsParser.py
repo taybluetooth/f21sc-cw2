@@ -20,7 +20,8 @@ class ArgsParser:
 
     """
     def parse(self):   
-        return self.root.parse_args()
+        parsed = self.root.parse_args()
+        return parsed
 
     """
     Constuctor function which initialises the class and assigns attributes to it.

@@ -10,8 +10,24 @@ import sys
 import matplotlib.pyplot as mpl
 import random
 
+# Add graphviz to system path variable
+# Neccesary step to import
+sys.path.append('lib/graphviz')
+# Import directed graph module
+from graphviz import Digraph
+
+# Add termcolor text colorisation module to system path variable
+# Necessary step to import
+sys.path.append('lib/termcolor')
+from termcolor import colored, cprint
+
+# Create functions for printing coloured messages.
+print_red = lambda x: cprint(x, 'white', 'on_red')
+
 # Declare graph class
 class Graph:
+
+    file = "DirectedGraph"
 
     """
     Draws a histogram graph given data that can be represented a constant
@@ -47,3 +63,55 @@ class Graph:
         # Assign graph title and display         
         mpl.title(title)
         mpl.show()
+
+    def shortenNumber(self, number):
+        number = number / 2
+        number = float('{:.3g}'.format(number))
+        size = 0
+        while abs(number) >= 1000:
+            size += 1
+            number /= 1000.0
+        return '{}{}'.format('{:f}'.format(number).rstrip('0').rstrip('.'), ['', 'K', 'M'][size])
+
+    """
+    https://graphviz.readthedocs.io/en/stable/manual.html
+    """
+    def directedGraph(self, data, documentID, lines, visitorID=None):
+        
+        if type(data) != dict:
+            print_red('Invalid data type given. Please use a valid data type suitable for digraph plotting.'% str(type(data)))
+            return
+
+        # Change line formatting to match test data expectations
+        # Use floor division to determine if line count is in 1,000's or 1,000,000's
+
+        lines = self.shortenNumber(lines)
+        size = str(lines)
+
+        graph = Digraph(name='Directed Graph')
+        graph.node('Documents', shape='none')
+        graph.node('Visitors', shape='none')
+        graph.edge('Visitors', 'Documents', label=('Size: %s' % size))
+
+        try:
+            for visitor in data:
+                if visitor == visitorID:
+                    graph.node(str(visitor)[-4:], fillcolor='green', shape='box', style='filled')
+                else:
+                    graph.node(str(visitor)[-4:], shape='box')
+                for document in data[visitor]:
+                    if document == documentID:
+                        graph.node(str(document)[-4:], fillcolor='green', style='filled')
+                    else:
+                        graph.node(str(document)[-4:])
+                    graph.edge(str(visitor)[-4:], str(document)[-4:])
+        except TypeError:
+            print_red('Invalid type: Type is not suitable for directedGraph method.')
+        except:
+            print_red('Error when creating directed graph.')
+
+        try:
+            graph.render(self.file, view=True)
+        except:
+            print_red('Cannot save graph to file with filename %s' % self.file)
+        

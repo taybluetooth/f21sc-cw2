@@ -7,11 +7,19 @@ Filename: gui.py
 
 # Import external libraries
 
+import sys
 from tkinter import *
 from tkinter import ttk
 
 import manager as mn
 
+# Add termcolor text colorisation module to system path variable
+# Necessary step to import
+sys.path.append('lib/termcolor')
+from termcolor import colored, cprint
+
+# Create functions for printing coloured messages.
+print_red = lambda x: cprint(x, 'white', 'on_red')
 
 # Declare class GUI
 class GUI:
@@ -41,17 +49,77 @@ class GUI:
     def continents(self):
         self.doJob('2B')
 
-    def largeBrowser(self):
-        print("Full Browser")
+    """
 
-    def shortBrowser(self):
-        print("Short Browser")
+    Method which calls the doJob method for the detailed browser (OS & Version included) visits functionality.
+    
+    :param: Self references the current instance of the GUI class.  
+    :return: Void
+    
+    """
+
+    def detailedBrowser(self):
+        self.doJob('3A')
+
+    """
+
+    Method which calls the doJob method for the concise browser (Main Browser Name only) visits functionality.
+    
+    :param: Self references the current instance of the GUI class.  
+    :return: Void
+    
+    """
+
+    def conciseBrowser(self):
+        self.doJob('3B')
+
+    """
+
+    Method which calls the doJob method for the top 10 most avid readers functionality.
+    
+    :param: Self references the current instance of the GUI class.  
+    :return: Void
+    
+    """
+
+    def readerProfile(self):
+        self.doJob('4')
+
+    """
+
+    Method which calls the doJob method for the also likes functionality.
+    
+    :param: Self references the current instance of the GUI class.  
+    :return: Void
+    
+    """
 
     def alsoLikes(self):
-        print("Also Likes")
+        self.doJob('5D')
+        
+    """
+
+    Method which calls the doJob method for the also likes graph generation functionality.
+    
+    :param: Self references the current instance of the GUI class.  
+    :return: Void
+    
+    """
 
     def alsoLikesGraph(self):
-        print("Also Likes Graph")
+        self.doJob('6')
+
+    """
+
+    Method which calls the doJob method for the gui test functionality.
+    
+    :param: Self references the current instance of the GUI class.  
+    :return: Void
+    
+    """
+
+    def guiTest(self):
+        self.doJob('7')
 
     """
 
@@ -67,15 +135,23 @@ class GUI:
     """
 
     def doJob(self, job):
-        user = self.userID.get()
+        # Strip whitespace from both user and document uuid's        
+        user = self.userID.get().strip()
         filename = self.filename.get()
-        document = self.documentID.get()
+        document = self.documentID.get().strip()
 
-        if document == "" or filename == "":
-            print("Please enter at least both a document uuid and filename")
+        if(job != '4'):
+            if document == "" or filename == "":
+                print_red("Please enter at least both a document uuid and filename")
+            else:
+                self.root.destroy()
+                mn.Manager(filename, job, document, user)
         else:
-            self.root.destroy()
-            mn.Manager(filename, job, document, user)
+            if filename == "":
+                print_red("Please enter a filename to calculate top 10 most avid readers.")
+            else:
+                self.root.destroy()
+                mn.Manager(filename, job, document, user)
 
     """
 
@@ -89,22 +165,25 @@ class GUI:
     
     def __init__(self):
         self.root = Tk()
-        self.root.title("F21SC CW2")
+        self.root.title("F20SC CW2")
 
         # Set window dimensions and layout
         mainframe = ttk.Frame(self.root, padding="12 12 12 12")
-        mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+        mainframe.grid(column=0, row=0, sticky=(N, E, S, W))
         mainframe.columnconfigure(0, weight=1)
         mainframe.rowconfigure(0, weight=1)
 
         # Action buttons
         # Text represents functionality as referenced in specification
-        ttk.Button(mainframe, text="2A", command=self.countries).grid(column=1, row=4, sticky=W)
-        ttk.Button(mainframe, text="2B", command=self.continents).grid(column=1, row=5, sticky=W)
-        ttk.Button(mainframe, text="3A", command=self.largeBrowser).grid(column=2, row=4, sticky=W)
-        ttk.Button(mainframe, text="3B", command=self.shortBrowser).grid(column=2, row=5, sticky=W)
-        ttk.Button(mainframe, text="4D", command=self.alsoLikes).grid(column=3, row=4, sticky=W)
-        ttk.Button(mainframe, text="5", command=self.alsoLikesGraph).grid(column=3, row=5, sticky=W)
+        
+        ttk.Button(mainframe, text="2A", command=self.countries).grid(column=2, row=4)
+        ttk.Button(mainframe, text="2B", command=self.continents).grid(column=3, row=4)
+        ttk.Button(mainframe, text="3A", command=self.detailedBrowser).grid(column=4, row=4)
+        ttk.Button(mainframe, text="3B", command=self.conciseBrowser).grid(column=5, row=4)
+        ttk.Button(mainframe, text="4", command=self.readerProfile).grid(column=2, row=5)
+        ttk.Button(mainframe, text="5D", command=self.alsoLikes).grid(column=3, row=5)
+        ttk.Button(mainframe, text="6", command=self.alsoLikesGraph).grid(column=4, row=5)
+        ttk.Button(mainframe, text="7", command=self.guiTest).grid(column=5, row=5)
 
         # Labels for text input fields
         ttk.Label(mainframe, text="User UUID:").grid(column=1, row=1, sticky=E)
@@ -116,16 +195,16 @@ class GUI:
         self.documentID = StringVar()
         self.filename = StringVar()
 
-        userID_entry = ttk.Entry(mainframe, width=7, textvariable=self.userID)
-        userID_entry.grid(column=2, row=1, columnspan=2, sticky=(W, E))
-        docID_entry = ttk.Entry(mainframe, width=7, textvariable=self.documentID)
-        docID_entry.grid(column=2, row=2, columnspan=2, sticky=(W, E))
-        filename_entry = ttk.Entry(mainframe, width=7, textvariable=self.filename)
-        filename_entry.grid(column=2, row=3, columnspan=2, sticky=(W, E))
+        user_input = ttk.Entry(mainframe, width=7, textvariable=self.userID)
+        user_input.grid(column=2, row=1, columnspan=2, sticky=(W, E))
+        doc_input = ttk.Entry(mainframe, width=7, textvariable=self.documentID)
+        doc_input.grid(column=2, row=2, columnspan=2, sticky=(W, E))
+        file_input = ttk.Entry(mainframe, width=7, textvariable=self.filename)
+        file_input.grid(column=2, row=3, columnspan=2, sticky=(W, E))
 
 
-        for child in mainframe.winfo_children(): child.grid_configure(padx=10, pady=10)
+        for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
 
-        docID_entry.focus()
+        doc_input.focus()
 
         self.root.mainloop()

@@ -1,4 +1,5 @@
 '''
+
 Author: Callum Taylor
 Document: fileHandler.py
 
@@ -7,6 +8,14 @@ Document: fileHandler.py
 import sys
 import json
 import io
+
+# Add termcolor text colorisation module to system path variable
+# Necessary step to import
+sys.path.append('lib/termcolor')
+from termcolor import colored, cprint
+
+# Create functions for printing coloured messages.
+print_red = lambda x: cprint(x, 'white', 'on_red')
 
 # Declare class FileHandler
 class FileHandler:
@@ -48,5 +57,5 @@ class FileHandler:
         # Catch file not found error
         # Exit program if file does not exist
         except FileNotFoundError:
-            print('The file \'%s\' does not exist in the working directory.' % str(self.file))
+            print_red('The file \'%s\' does not exist in the working directory.' % str(self.file))
             sys.exit()
