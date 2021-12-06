@@ -82,7 +82,8 @@ class Manager:
         
         """
         Controller method which calls the readerProfile method in the analysis class. It then calls the sortDict method in the analysis class
-        using the readers object to sort the dictionary, assigning it to the maxValues variable. This variable is then used to plot a histogram
+        using the readers object to sort the dictionary, assigning it to the maxValues variable. This variable is then used to calculate the graphValues, which
+        are just shortened uuid's only showing the last 4 digits to improve readability that is used to plot a histogram
         using the drawHistogram method found in the graph class.
 
         :param: Self references the current instance of the manager class.
@@ -92,13 +93,18 @@ class Manager:
         self.analyzer.readerProfile(self.fileHandler)
         maxValues = self.analyzer.sortDict(self.analyzer.readers)
         maxValues = dict(maxValues[:10])
+        
+        graphValues = {}
+        for user,time in maxValues.items():
+            graphValues[user[-4:]] = time
+        
         if maxValues:
             i = 0
             print(f"\tUser UUID\t\tTime Spent Reading (s)\n")
             for user,time in maxValues.items():
                 i+=1
                 print(f"{i}.\t{user}\t{time}")
-            self.graph.drawHistogram(maxValues, title="Top 10 Most Avid Readers", label="Total Time Spent Reading (secs)")
+            self.graph.drawHistogram(graphValues, title="Top 10 Most Avid Readers", label="Total Time Spent Reading (secs)")
         
     def alsoLikes(self):
         

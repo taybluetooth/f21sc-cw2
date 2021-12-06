@@ -52,11 +52,13 @@ def startup():
     print("\nF20SC Document Tracker")
     print("Developed by Callum Taylor\n")
     
-    print("Currently running on {platform.system()} version {platform.release()}")
+    print(f"Currently running on {platform.system()} version {platform.release()}")
     print("Libraries Used:\n")
-    print_blue("Argparse Version: " + ag.__version__)
-    print_blue("Matplotlib Version: " + mpl.__version__)
-    print_blue("Tkinter Version: " + ttk.__version__)
+    print_blue(f"Argparse Version: {ag.__version__}")
+    print_blue(f"Matplotlib Version: {mpl.__version__}")
+    print_blue(f"Pycountry Version: {pycc.__version__}")
+    print_blue(f"Graphviz Version: {gv.__version__}")
+    print_blue(f"Tkinter Version: {ttk.__version__}")
     
 # Check arguments contains at bare minimum the execution file's name.
 # If so open the GUI.

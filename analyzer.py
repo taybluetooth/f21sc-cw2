@@ -175,29 +175,6 @@ class Analyzer:
         output = sorted(dictionary.items(), key=operator.itemgetter(1), reverse=True)
         return output
 
-    def docVisitors(self, documentID, file):
-        
-        """
-        Method which returns all visitor uuid's of a document given a specified document.
-
-        Reads each line processed by the fileHandler class for visitors who have a matching subject_doc_id with
-        the specified document. If there is a match the document is added to a list of documents read by the visitor.
-        This list is then returned.
-        
-        :param: Self references the current instance of the Analyzer class.
-        :param: documentID references the user inputted document uuid.
-        :param: file references the file being read by the fileHandler class.
-        :return: Void
-        """
-        
-        documents = []
-        
-        for record in file.processFile():
-            if 'visitor_uuid' in record and 'subject_doc_id' in record and 'event_type' in record:
-                if record['event_type'] == 'read' or record['event_type'] == 'pageread' or record['event_type'] == 'pagereadtime':
-                    if str(record['subject_doc_id']) == documentID:
-                        documents.append(record['visitor_uuid'])
-        return documents
 
     def parseDocVisitors(self, file):
         
